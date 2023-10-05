@@ -25,38 +25,38 @@ namespace ExamenGrupal
             while (Inicio)
             {
                 //bool loop = false;
-                Console.Write("What is your name? ");
+                Console.Write("Cual es tu nombre? ");
                 pName = Console.ReadLine();
                 loop = true;
                 while (loop)
                 {
-                    Console.Write("What is your strength? (" + PuntosStats + " points remaining) ");
+                    Console.Write("Cuanta fuerza tiene tu personaje? (" + PuntosStats + " puntos restantes) ");
                     int choice = int.Parse(Console.ReadLine());
                     if (choice > PuntosStats)
                     {
-                        Console.WriteLine("You don't have that many points! Try again.");
+                        Console.WriteLine("No tienes puntos suficientes! Intentalo denuevo.");
                     }
                     else
                     {
                         pStrength = choice;
                         PuntosStats -= pStrength;
 
-                        Console.Write("How much dexterity would you say you have? (" + PuntosStats + " points remaining) ");
+                        Console.Write("Cuanta agilidad tiene tu personaje? (" + PuntosStats + " puntos restantes) ");
                         int choice2 = int.Parse(Console.ReadLine());
                         if (choice2 > PuntosStats)
                         {
-                            Console.WriteLine("You don't have that many points! Try again.");
+                            Console.WriteLine("No tienes puntos suficientes! Intentalo denuevo.");
                         }
                         else
                         {
                             pDexterity = choice2;
                             PuntosStats -= pDexterity;
 
-                            Console.Write("How much health do you want? (" + PuntosStats + " points remaining) ");
+                            Console.Write("Cuanta vida tiene tu personaje? (" + PuntosStats + " puntos restantes) ");
                             int choice3 = int.Parse(Console.ReadLine());
                             if (choice3 > PuntosStats)
                             {
-                                Console.WriteLine("You don't have that many points! Try again.");
+                                Console.WriteLine("No tienes puntos suficientes! Intentalo denuevo.");
                             }
                             else
                             {
@@ -68,7 +68,7 @@ namespace ExamenGrupal
                     }
                 }
                 Jugador player = new Jugador(pName, pStrength, pDexterity, pHealth);
-                Console.WriteLine("Perfect! You are:\n" + player.MostrarEstadisticas());
+                Console.WriteLine("Perfecto! Tu eres:\n" + player.MostrarEstadisticas());
 
                 Console.WriteLine("¡Oh no! ¡Has sido capturado por los marcianos! Te encuentras dentro de un platillo volador... En frente tuyo puedes ver un escritorio cromado dónde descansan tres herramientas...");
                 loop = true;
@@ -77,6 +77,7 @@ namespace ExamenGrupal
                     if (!escenario1)
                     {
                         Console.WriteLine("A. Una Banana B. Un bisturí C. Una pistola laser. ¿Cuál recogerás?");
+
                         string choice = Console.ReadLine().ToLower();
                         switch (choice)
                         {
@@ -90,8 +91,10 @@ namespace ExamenGrupal
                                 escenario1 = true;
                                 break;
                             case "c":
+
                                 SituacionMala("[Cuando tomas la pistola láser, te das cuenta de lo complicada que es. Una maquinación inhumana, que parece no tener ni principio ni final. Te confundes, te confundes muchísimo]", ref player.salud, "Health", 20);
                                 escenario1 = true;
+
                                 break;
                             default:
                                 break;
@@ -102,6 +105,7 @@ namespace ExamenGrupal
                         if (!escenario2)
                         {
                             Console.WriteLine("Consigues tu fiel herramienta. Ahora... Hay tres puertas por las que puedes ir. Una roja... Una azul... Y una verde. ¿Los marcianos tienen sentido del color? Eso es definitivamente interesante... Ahora... ¿A qué puerta irás? A.La roja B.La azul C.La verde. ");
+
                             string choice = Console.ReadLine().ToLower();
                             switch (choice)
                             {
@@ -125,6 +129,7 @@ namespace ExamenGrupal
                                         SituacionMala("..." , ref player.salud, "Health", 100);
 
                                     }
+
                                     break;
                                 default:
                                     break;
@@ -135,6 +140,7 @@ namespace ExamenGrupal
                             if (!escenario3)
                             {
                                 Console.WriteLine("[Tras haber sobrevivido a tal intensa interacción, llegas a una habitación. Detrás tuyo ves las mismas puertas que antes. Al parecer todas llevaban al mismo lado. Qué diseñadores y programadores tan listos. Sigues por delante. Encuentras una máquina carnosa y llena de tentáculos. No hay opción mas que entrar a esta. Así lo haces, dándote cuenta que esta estaba cubierta en una sustancia babosa. Ew. Dentro de este teletransportador encuentras tres botones. El botón A. tiene la silueta de una vaca. El botón B. tiene la silueta de un chimpancé. El botón C. tiene la silueta de un tiburón. ¿Cuál botón apretarás?]");
+
                                 string choice = Console.ReadLine().ToLower();
                                 switch (choice)
                                 {
@@ -154,7 +160,9 @@ namespace ExamenGrupal
                                         }
                                         break;
                                     case "c":
+
                                         Situacion("[El teletransportador te teletransporta... (Qué cliché) a una habitación completamente blanca y llena de agua... Puedes ver delante tuyo a un tiburón... Un animal que Hollywood te ha vendido como una máquina de matar al acecho... Pero en realidad los tiburones son bastante amigables. Es más, me atrevería a apostar que tenías menos posibilidades con las vacas y los chimpancés. No molestas al tiburón y el no te molesta a ti... Pasas de largo]");
+
                                         break;
                                     default:
                                         break;
@@ -165,7 +173,7 @@ namespace ExamenGrupal
                                 bool quit = true;
                                 while (quit)
                                 {
-                                    Console.WriteLine("You died trying to escape this place. GAME OVER\nRetry? [Y/N]");
+                                    Console.WriteLine("Moriste tratando de escapar de este lugar. PERDISTE\n Quieres intentarlo denuevo? [Y/N]");
                                     string choice = Console.ReadLine().ToLower();
                                     switch (choice)
                                     {
@@ -183,7 +191,7 @@ namespace ExamenGrupal
                                             Inicio = false;
                                             break;
                                         default:
-                                            Console.WriteLine("Please select a valid option.");
+                                            Console.WriteLine("Por favor selecciona una opcion valida.");
                                             break;
                                     }
                                 }
