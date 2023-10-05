@@ -66,8 +66,8 @@ namespace ExamenGrupal
                         }
                     }
                 }
-               // Jugador player = new Jugador(pName, pStrength, pDexterity, pHealth);
-               // Console.WriteLine("Perfect! You are:\n" + player.ShowStats());
+                Jugador player = new Jugador(pName, pStrength, pDexterity, pHealth);
+                Console.WriteLine("Perfect! You are:\n" + player.MostrarEstadisticas());
 
                 Console.WriteLine("[Presentación de la aventura]");
                 loop = true;
@@ -87,7 +87,7 @@ namespace ExamenGrupal
                                 escenario1 = true;
                                 break;
                             case "c":
-                              //  SituacionMala("[Consecuencia C]", ref player.health, "Health", 5);
+                                SituacionMala("[Consecuencia C]", ref player.salud, "Health", 5);
                                 break;
                             default:
                                 break;
@@ -109,7 +109,7 @@ namespace ExamenGrupal
                                     Situacion("[Consecuencia B]");
                                     break;
                                 case "c":
-                                  //  SituacionMala("[Consecuencia C]", ref player.health, "Health", 5);
+                                    SituacionMala("[Consecuencia C]", ref player.salud, "Health", 5);
                                     break;
                                 default:
                                     break;
@@ -131,7 +131,7 @@ namespace ExamenGrupal
                                         escenario3 = true;
                                         break;
                                     case "c":
-                                   //     SituacionMala("[Consecuencia C]", ref player.health, "Health", 5);
+                                        SituacionMala("[Consecuencia C]", ref player.salud, "Health", 5);
                                         break;
                                     default:
                                         break;
@@ -174,18 +174,18 @@ namespace ExamenGrupal
                 }
                 void SituacionMala(string efecto, ref int stat, string statName, int resultado)
                 {
-                    /* stat -= resultado;
-                     if (player.IsAlive(player.health))
+                     stat -= resultado;
+                     if (player.EstaVivo(player.salud))
                      {
                          Console.WriteLine(efecto + "\nConsequence: -" + resultado + " " +
-                         statName + "\n" + player.ShowStats()); ;
+                         statName + "\n" + player.MostrarEstadisticas()); ;
                      }
                      else
                      {
                          Console.WriteLine("Tu personaje murio! Perdiste.");
                          loop = false;
 
-                     }*/
+                     }
                 }
             }
         }
