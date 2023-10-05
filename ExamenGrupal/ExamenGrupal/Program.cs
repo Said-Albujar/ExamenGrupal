@@ -24,38 +24,38 @@ namespace ExamenGrupal
             while (Inicio)
             {
                 //bool loop = false;
-                Console.Write("What is your name? ");
+                Console.Write("Cual es tu nombre? ");
                 pName = Console.ReadLine();
                 loop = true;
                 while (loop)
                 {
-                    Console.Write("What is your strength? (" + PuntosStats + " points remaining) ");
+                    Console.Write("Cuanta fuerza tiene tu personaje? (" + PuntosStats + " puntos restantes) ");
                     int choice = int.Parse(Console.ReadLine());
                     if (choice > PuntosStats)
                     {
-                        Console.WriteLine("You don't have that many points! Try again.");
+                        Console.WriteLine("No tienes puntos suficientes! Intentalo denuevo.");
                     }
                     else
                     {
                         pStrength = choice;
                         PuntosStats -= pStrength;
 
-                        Console.Write("How much dexterity would you say you have? (" + PuntosStats + " points remaining) ");
+                        Console.Write("Cuanta agilidad tiene tu personaje? (" + PuntosStats + " puntos restantes) ");
                         int choice2 = int.Parse(Console.ReadLine());
                         if (choice2 > PuntosStats)
                         {
-                            Console.WriteLine("You don't have that many points! Try again.");
+                            Console.WriteLine("No tienes puntos suficientes! Intentalo denuevo.");
                         }
                         else
                         {
                             pDexterity = choice2;
                             PuntosStats -= pDexterity;
 
-                            Console.Write("How much health do you want? (" + PuntosStats + " points remaining) ");
+                            Console.Write("Cuanta vida tiene tu personaje? (" + PuntosStats + " puntos restantes) ");
                             int choice3 = int.Parse(Console.ReadLine());
                             if (choice3 > PuntosStats)
                             {
-                                Console.WriteLine("You don't have that many points! Try again.");
+                                Console.WriteLine("No tienes puntos suficientes! Intentalo denuevo.");
                             }
                             else
                             {
@@ -67,7 +67,7 @@ namespace ExamenGrupal
                     }
                 }
                 Jugador player = new Jugador(pName, pStrength, pDexterity, pHealth);
-                Console.WriteLine("Perfect! You are:\n" + player.MostrarEstadisticas());
+                Console.WriteLine("Perfecto! Tu eres:\n" + player.MostrarEstadisticas());
 
                 Console.WriteLine("[Presentación de la aventura]");
                 loop = true;
@@ -75,7 +75,7 @@ namespace ExamenGrupal
                 {
                     if (!escenario1)
                     {
-                        Console.WriteLine("Tienes tres opciones/caminos/lo que sea. A/B/C");
+                        Console.WriteLine("Tienes tres opciones/caminos. A/B/C");
                         string choice = Console.ReadLine().ToLower();
                         switch (choice)
                         {
@@ -87,7 +87,7 @@ namespace ExamenGrupal
                                 escenario1 = true;
                                 break;
                             case "c":
-                                SituacionMala("[Consecuencia C]", ref player.salud, "Health", 5);
+                                SituacionMala("[Consecuencia C]", ref player.salud, "de Vida", 5);
                                 break;
                             default:
                                 break;
@@ -97,7 +97,7 @@ namespace ExamenGrupal
                     {
                         if (!escenario2)
                         {
-                            Console.WriteLine("Tienes otros tres opciones/caminos/lo que sea. A/B/C");
+                            Console.WriteLine("Tienes otras tres opciones/caminos. A/B/C");
                             string choice = Console.ReadLine().ToLower();
                             switch (choice)
                             {
@@ -109,7 +109,7 @@ namespace ExamenGrupal
                                     Situacion("[Consecuencia B]");
                                     break;
                                 case "c":
-                                    SituacionMala("[Consecuencia C]", ref player.salud, "Health", 5);
+                                    SituacionMala("[Consecuencia C]", ref player.salud, "de Vida", 5);
                                     break;
                                 default:
                                     break;
@@ -119,7 +119,7 @@ namespace ExamenGrupal
                         {
                             if (!escenario3)
                             {
-                                Console.WriteLine("Tienes OTROS OTROS tres opciones/caminos/lo que sea. A/B/C");
+                                Console.WriteLine("Tienes otras tres opciones/caminos mas. A/B/C");
                                 string choice = Console.ReadLine().ToLower();
                                 switch (choice)
                                 {
@@ -131,7 +131,7 @@ namespace ExamenGrupal
                                         escenario3 = true;
                                         break;
                                     case "c":
-                                        SituacionMala("[Consecuencia C]", ref player.salud, "Health", 5);
+                                        SituacionMala("[Consecuencia C]", ref player.salud, "de Vida", 5);
                                         break;
                                     default:
                                         break;
@@ -142,7 +142,7 @@ namespace ExamenGrupal
                                 bool quit = true;
                                 while (quit)
                                 {
-                                    Console.WriteLine("You died trying to escape this place. GAME OVER\nRetry? [Y/N]");
+                                    Console.WriteLine("Moriste tratando de escapar de este lugar. PERDISTE\n Quieres intentarlo denuevo? [Y/N]");
                                     string choice = Console.ReadLine().ToLower();
                                     switch (choice)
                                     {
@@ -160,7 +160,7 @@ namespace ExamenGrupal
                                             Inicio = false;
                                             break;
                                         default:
-                                            Console.WriteLine("Please select a valid option.");
+                                            Console.WriteLine("Por favor selecciona una opcion valida.");
                                             break;
                                     }
                                 }
