@@ -10,10 +10,10 @@ namespace ExamenGrupal
     {
         static void Main(string[] args)
         {
-            string pName = "";
-            int pStrength = 0;
-            int pDexterity = 0;
-            int pHealth = 0;
+            string nombre = "";
+            int fuerza = 0;
+            int destreza = 0;
+            int vida = 0;
             int PuntosStats = 100;
             bool Inicio = true;
             bool loop = false;
@@ -22,11 +22,12 @@ namespace ExamenGrupal
             bool escenario3 = false;
             bool banana = false;
 
+            //Creación del personaje
             while (Inicio)
             {
                 //bool loop = false;
                 Console.Write("Cual es tu nombre? ");
-                pName = Console.ReadLine();
+                nombre = Console.ReadLine();
                 loop = true;
                 while (loop)
                 {
@@ -38,10 +39,10 @@ namespace ExamenGrupal
                     }
                     else
                     {
-                        pStrength = choice;
-                        PuntosStats -= pStrength;
+                        fuerza = choice;
+                        PuntosStats -= fuerza;
 
-                        Console.Write("Cuanta agilidad tiene tu personaje? (" + PuntosStats + " puntos restantes) ");
+                        Console.Write("Cuanta destreza tiene tu personaje? (" + PuntosStats + " puntos restantes) ");
                         int choice2 = int.Parse(Console.ReadLine());
                         if (choice2 > PuntosStats)
                         {
@@ -49,8 +50,8 @@ namespace ExamenGrupal
                         }
                         else
                         {
-                            pDexterity = choice2;
-                            PuntosStats -= pDexterity;
+                            destreza = choice2;
+                            PuntosStats -= destreza;
 
                             Console.Write("Cuanta vida tiene tu personaje? (" + PuntosStats + " puntos restantes) ");
                             int choice3 = int.Parse(Console.ReadLine());
@@ -60,14 +61,14 @@ namespace ExamenGrupal
                             }
                             else
                             {
-                                pHealth = choice3;
-                                PuntosStats -= pHealth;
+                                vida = choice3;
+                                PuntosStats -= vida;
                                 loop = false;
                             }
                         }
                     }
                 }
-                Jugador player = new Jugador(pName, pStrength, pDexterity, pHealth);
+                Jugador player = new Jugador(nombre, fuerza, destreza, vida);
                 Console.WriteLine("Perfecto! Tu eres:\n" + player.MostrarEstadisticas());
 
                 Console.WriteLine("¡Oh no! ¡Has sido capturado por los marcianos! Te encuentras dentro de un platillo volador... En frente tuyo puedes ver un escritorio cromado dónde descansan tres herramientas...");
@@ -76,7 +77,7 @@ namespace ExamenGrupal
                 {
                     if (!escenario1)
                     {
-                        Console.WriteLine("A. Una Banana B. Un bisturí C. Una pistola laser. ¿Cuál recogerás?");
+                        Console.WriteLine("A. Una Banana B. Un bisturí (Destreza: 5) C. Una pistola laser (Destreza: 20). ¿Cuál recogerás?");
 
                         string choice = Console.ReadLine().ToLower();
                         switch (choice)
@@ -87,14 +88,30 @@ namespace ExamenGrupal
                                 escenario1 = true;
                                 break;
                             case "b":
-                                Situacion("[Has conseguido un bisturí. ¿Para que quieres eso? Mira, hasta está roto. Creo que eres un poco tonto.]");
-                                escenario1 = true;
+                                
+                                if(destreza <= 5)
+                                {
+                                    SituacionMala("[Cuando intentas agarrar el bisturí, te cortas lamentablemente.]", ref player.salud, "Vida", 3);
+                                    escenario1 = true;
+                                }
+                                else
+                                {
+                                    Situacion("[Has conseguido un bisturí. ¿Para que quieres eso? Mira, hasta está roto. Creo que eres un poco tonto.]");
+                                    escenario1 = true;
+                                }
                                 break;
                             case "c":
+                                if (destreza <= 20)
+                                {
+                                    SituacionMala("[Cuando tomas la pistola láser, te das cuenta de lo complicada que es. Una maquinación inhumana, que parece no tener ni principio ni final. Te confundes, te confundes muchísimo]", ref player.salud, "Health", 20);
+                                    escenario1 = true;
+                                }
+                                else
+                                {
+                                    Situacion("[Has conseguido una pistola láser.]");
+                                    escenario1 = true;
 
-                                SituacionMala("[Cuando tomas la pistola láser, te das cuenta de lo complicada que es. Una maquinación inhumana, que parece no tener ni principio ni final. Te confundes, te confundes muchísimo]", ref player.salud, "Health", 20);
-                                escenario1 = true;
-
+                                }
                                 break;
                             default:
                                 break;
@@ -110,8 +127,14 @@ namespace ExamenGrupal
                             switch (choice)
                             {
                                 case "a":
-                                    Situacion("[Pasas a un laboratorio... Este parece estar vacio. Si no fuera por los cadáveres horripilantes en cada una de las mesas cromadas... Y eso... ¿Sangre? No. Jugo de tomate. Y esos no son cadáveres, son muñecos de hule. Increíble. Los marcianos son una raza superior. definitivamente... ]");
+                                    
+                                    Situacion("[Pasas a un laboratorio... Este parece estar vacio. Si no fuera por los cadáveres horripilantes en cada una de las mesas cromadas... " +
+                                        "Y eso... ¿Sangre? No. Jugo de tomate. Y esos no son cadáveres, son muñecos de hule. Increíble. Los marcianos son una raza superior. definitivamente... ]");
+                                    Situacion("[Mientras sigues explorando por el laboratorio, encuentras un hoyo oscuro. Te le acercas a él y te quedas un rato mirandolo... De la nada sale un alien atrás tuyo y te empuja. Mueres al caer.] - (Final 3)");
+                                    SituacionMala("...", ref player.salud, "Health", 100);
                                     escenario2 = true;
+
+
                                     break;
                                 case "b":
                                     Situacion("[Te encuentras en un salón lleno de globos y luces. ¿Una pista de baile? Increíble. Los marcianos te capturaron ya... Y lo hicieron bailando rica chá. ¿Sabías que así llaman en Marte al Chachachá?]");
@@ -145,8 +168,25 @@ namespace ExamenGrupal
                                 switch (choice)
                                 {
                                     case "a":
-                                        Situacion("[El teletransportador te teletransporta... (Qué cliché) a una habitación completamente blanca y repleta de vacas hasta el techo. Casi ni te puedes mover. Lo único que ves son vacas. Lo único que hueles son vacas. Lo único que sientes son vacas.]");
+                                        if (fuerza < 15)
+                                        {
+                                            Situacion("[El teletransportador te teletransporta... (Qué cliché) a una habitación completamente blanca y " +
+                                                "repleta de vacas hasta el techo. Casi ni te puedes mover. Lo único que ves son vacas. Lo único que hueles son vacas. " +
+                                                "Lo único que sientes son vacas.]");
+                                            Situacion("[Intentaste mover las vacas con toda tu fuerza pero no fue suficente. Te quedaste encerrado en esa habitación y ahora crees que eres una vaca.] - (Final 1)");
+                                            SituacionMala("...", ref player.salud, "Health", 100);
+                                        }
+
+                                        else
+                                        {
+                                            Situacion("[El teletransportador te teletransporta... (Qué cliché) a una habitación completamente blanca y " +
+                                                "repleta de vacas hasta el techo. Casi ni te puedes mover. Lo único que ves son vacas. Lo único que hueles son vacas. " +
+                                                "Lo único que sientes son vacas.]");
+                                            Situacion("[Logras mover todas las vacas y consigues una puerta. Lograste escapar] - (Final 2)");
+                                            escenario3 = true;
+                                        }
                                         break;
+
                                     case "b":
                                         if (banana == true)
                                         {
@@ -161,8 +201,9 @@ namespace ExamenGrupal
                                         break;
                                     case "c":
 
-                                        Situacion("[El teletransportador te teletransporta... (Qué cliché) a una habitación completamente blanca y llena de agua... Puedes ver delante tuyo a un tiburón... Un animal que Hollywood te ha vendido como una máquina de matar al acecho... Pero en realidad los tiburones son bastante amigables. Es más, me atrevería a apostar que tenías menos posibilidades con las vacas y los chimpancés. No molestas al tiburón y el no te molesta a ti... Pasas de largo]");
-
+                                        Situacion("[El teletransportador te teletransporta... (Qué cliché) a una habitación completamente blanca y llena de agua... Puedes ver delante tuyo a un tiburón... Un animal que Hollywood te ha vendido como una máquina de matar al acecho... Pero en realidad los tiburones son bastante amigables. Es más, me atrevería a apostar que tenías menos posibilidades con las vacas y los chimpancés. No molestas al tiburón y el no te molesta a ti... " +
+                                            "Pasas de largo y llegas a una playa de Estados Unidos y te logran ayudar. - (Final 4)]");
+                                        escenario3 = true;
                                         break;
                                     default:
                                         break;
@@ -170,23 +211,23 @@ namespace ExamenGrupal
                             }
                             else
                             {
-                                bool quit = true;
-                                while (quit)
+                                bool salirJuego = true;
+                                while (salirJuego)
                                 {
-                                    Console.WriteLine("Moriste tratando de escapar de este lugar. PERDISTE\n Quieres intentarlo denuevo? [Y/N]");
-                                    string choice = Console.ReadLine().ToLower();
-                                    switch (choice)
+                                    Console.WriteLine("Has logrado escapar. \n Quieres intentarlo denuevo? [S/N]");
+                                    string option = Console.ReadLine().ToLower();
+                                    switch (option)
                                     {
-                                        case "y":
+                                        case "s":
                                             escenario1 = false;
                                             escenario2 = false;
                                             escenario3 = false;
                                             loop = false;
-                                            quit = false;
+                                            salirJuego = false;
                                             PuntosStats = 100;
                                             break;
                                         case "n":
-                                            quit = false;
+                                            salirJuego = false;
                                             loop = false;
                                             Inicio = false;
                                             break;
@@ -203,19 +244,37 @@ namespace ExamenGrupal
                 {
                     Console.WriteLine(efecto);
                 }
-                void SituacionMala(string efecto, ref int stat, string statName, int resultado)
+                void SituacionMala(string efecto, ref int stat, string statNombre, int resultado)
                 {
                      stat -= resultado;
                      if (player.EstaVivo(player.salud))
                      {
-                         Console.WriteLine(efecto + "\nConsequence: -" + resultado + " " +
-                         statName + "\n" + player.MostrarEstadisticas()); ;
+                         Console.WriteLine(efecto + "\nConsecuencia: -" + resultado + " " +
+                         statNombre + "\n" + player.MostrarEstadisticas()); ;
                      }
                      else
                      {
-                        Console.WriteLine("Has muerto... Tu aventura ha llegado a su fin... Y sin embargo... Tanto pudo haber cambiado... Solo te queda preguntarte... ¿Serías capaz de escapar del platillo si tuvieras otra oportunidad?");
-                         loop = false;
-
+                        Console.WriteLine("Has muerto... Tu aventura ha llegado a su fin... Y sin embargo... Tanto pudo haber cambiado... " +
+                            "Solo te queda preguntarte... ¿Serías capaz de escapar del platillo si tuvieras otra oportunidad? " +
+                            "\n Quieres intentarlo denuevo? [S/N]");
+                        string op = Console.ReadLine().ToLower();
+                        switch (op)
+                        {
+                            case "s":
+                                escenario1 = false;
+                                escenario2 = false;
+                                escenario3 = false;
+                                loop = false;
+                                PuntosStats = 100;
+                                break;
+                            case "n":
+                                loop = false;
+                                Inicio = false;
+                                break;
+                            default:
+                                Console.WriteLine("Por favor selecciona una opcion valida.");
+                                break;
+                        }
                      }
                 }
             }
